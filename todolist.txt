@@ -1,0 +1,6 @@
+a front page to shows flash cart
+a front page to create flash cart
+a front page to delete flash cart
+a front page to update flash cart
+a front page to link to other pages
+a simple login page
