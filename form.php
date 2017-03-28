@@ -4,6 +4,49 @@
     $_SESSION['message'] = '';
     include 'db.php';
 
+    //the form has been submitted with post
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    //two passwords are equal to each other
+    if ($_POST['password'] == $_POST['confirmpassword']) {
+        
+        //define other variables with submitted values from $_POST
+        $username = $mysqli->real_escape_string($_POST['username']);
+        $email = $mysqli->real_escape_string($_POST['email']);
+
+        //md5 hash password for security
+        $password = md5($_POST['password']);
+
+        //path were our avatar image will be stored
+        $avatar_path = $mysqli->real_escape_string('images/'.$_FILES['avatar']['name']);
+        
+        //make sure the file type is image
+        if (preg_match("!image!",$_FILES['avatar']['type'])) {
+            
+            //copy image to images/ folder 
+            if (copy($_FILES['avatar']['tmp_name'], $avatar_path)){
+                
+                //set session variables to display on welcome page
+                $_SESSION['username'] = $username;
+                $_SESSION['avatar'] = $avatar_path;
+
+                //insert user data into database
+                $sql = 
+                "INSERT INTO users (username, email, password, avatar) "
+                . "VALUES ('$username', '$email', '$password', '$avatar_path')";
+                
+                //check if mysql query is successful
+                if ($mysqli->query($sql) === true){
+                    $_SESSION['message'] = "Registration successful!"
+                    . "Added $username to the database!";
+                    //redirect the user to welcome.php
+                    header("location: welcome.php");
+                }
+            }
+        }
+    }
+}
+
     //form HTML code here.....
 
 ?>
@@ -11,7 +54,7 @@
 <link rel="stylesheet" href="form.css" type="text/css">
 <div class="body-content">
   <div class="module">
-    <h1>Create an account</h1>
+    <h1>Create an account noooo</h1>
     <form class="form" action="form.php" method="post" enctype="multipart/form-data" autocomplete="off">
       <div class="alert alert-error"></div>
       <input type="text" placeholder="User Name" name="username" required />
