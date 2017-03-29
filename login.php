@@ -20,24 +20,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
   $result = $mysqli->query( $sql );
   
-if ( $result->num_rows == 0 ){ // User doesn't exist
+  if ( $result->num_rows == 0 ){ // User doesn't exist
     $_SESSION['message'] = "User with that email doesn't exist!";
     //header("location: login.php");
-}
-else { // User exists
+  } else { // User exists
     $user = $result->fetch_assoc();
     if ( $password == $user['password'] ) {
         
-        $_SESSION['avatar'] = $user['avatar'];
+      $_SESSION['avatar'] = $user['avatar'];
         
-        // This is how we'll know the user is logged in
-        $_SESSION['logged_in'] = true;
+      // This is how we'll know the user is logged in
+      $_SESSION['logged_in'] = true;
+      $_SESSION['message'] = "Welcome back $username !";
       header("location: welcome.php");
-    }
-    else {
-        $_SESSION['message'] = "You have entered wrong password, try again!";
-        echo $_SESSION['message'] . '</br>';
-        //header("location: error.php");
+    } else {
+      $_SESSION['message'] = "You have entered wrong password, try again!";
+      //header("location: error.php");
     }
 }
 }
@@ -48,7 +46,7 @@ else { // User exists
   <div class="module">
     <h1>Login form</h1>
     <form class="form" action="login.php" method="post" enctype="multipart/form-data" autocomplete="off">
-      <div class="alert alert-error">hey</div>
+      <div class="alert alert-error"><?php $_SESSION['message'] ?></div>
       <input type="text" placeholder="User Name" name="username" required />
       <input type="password" placeholder="Password" name="password" autocomplete="new-password" required />
       <input type="submit" value="Login" name="login" class="btn btn-block btn-primary" />
