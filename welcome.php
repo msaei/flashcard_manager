@@ -11,7 +11,7 @@ session_start();
     <img src="<?= $_SESSION['avatar'] ?>"><br />
     Welcome <span class="user"><?= $_SESSION['username'] ?></span>
     <?php
-    //$mysqli = new mysqli("localhost", "root", "mypass123", "accounts_complete");
+    /* //$mysqli = new mysqli("localhost", "root", "mypass123", "accounts_complete");
     include 'db.php';
     $sql = "SELECT username, avatar FROM users";
     //$result = mysqli_result object
@@ -24,7 +24,7 @@ session_start();
     while( $row = $result->fetch_assoc() ){ 
         echo "<div class='userlist'><span>".$row['username']."</span><br />";
         echo "<img src='".$row['avatar']."'></div>";
-    }
+    } */
 ?>
 </div>
 </div>
